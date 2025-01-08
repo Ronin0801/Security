@@ -21,6 +21,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Set session variables
             $_SESSION['user_ID'] = $user['user_ID'];
             $_SESSION['user_name'] = $user['user_name'];
+            $_SESSION['user_email'] = $user['user_email'];
+            $_SESSION['user_type'] = $user['user_type']; // Store user_type in session
+
             header("Location: dashboard.php"); // Redirect to dashboard
             exit();
         } else {
@@ -36,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 if (isset($_GET['message']) && $_GET['message'] == 'logged_out') {
     echo "<p>You have successfully logged out.</p>";
 }
-
 ?>
 
 <!DOCTYPE html>

@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo "Username or email already exists. Please choose a different one.";
         } else {
             // Insert new user
-            $sql = "INSERT INTO users (user_name, user_email, user_pass) VALUES (?, ?, ?)";
+            $sql = "INSERT INTO users (user_name, user_email, user_pass, user_type) VALUES (?, ?, ?, 0)";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("sss", $user_name, $user_email, $hashed_pass);
 

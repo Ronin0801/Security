@@ -25,6 +25,18 @@ header("Pragma: no-cache");
         <li><a href="records.php?category=Entertainment">Entertainment</a></li>
         <li><a href="records.php?category=Others">Others</a></li>
     </ul>
+
+    <!-- Add "My Profile" Button -->
+    <a href="profile_confirm.php">My Profile</a> | 
+    
+
+    <?php if ($_SESSION['user_type'] == 1): ?>
+        <a href="admin.php">Admin</a> | 
+    <?php endif; ?>
+
+
+    <!-- Logout Button -->
     <a href="logout.php">Logout</a>
 </body>
 </html>
+
