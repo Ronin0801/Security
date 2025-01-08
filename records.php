@@ -24,6 +24,23 @@ $result = $stmt->get_result();
 <html>
 <head>
     <title><?php echo htmlspecialchars($category); ?> Records</title>
+    <script>
+        function toggleDetails(rowId) {
+            const detailsRow = document.getElementById(`details-${rowId}`);
+            const revealButton = document.getElementById(`reveal-${rowId}`);
+            const hideButton = document.getElementById(`hide-${rowId}`);
+            
+            if (detailsRow.style.display === "none") {
+                detailsRow.style.display = "table-row";
+                revealButton.style.display = "none";
+                hideButton.style.display = "inline";
+            } else {
+                detailsRow.style.display = "none";
+                revealButton.style.display = "inline";
+                hideButton.style.display = "none";
+            }
+        }
+    </script>
 </head>
 <body>
     <h2><?php echo htmlspecialchars($category); ?> Records</h2>
@@ -43,19 +60,26 @@ $result = $stmt->get_result();
     </form>
 
     <h3>Existing Records</h3>
-    <table>
+    <table border="1">
         <tr>
             <th>Title</th>
-            <th>Username</th>
             <th>Actions</th>
         </tr>
         <?php while ($row = $result->fetch_assoc()): ?>
             <tr>
                 <td><?php echo htmlspecialchars($row['record_title']); ?></td>
-                <td><?php echo htmlspecialchars($row['record_username']); ?></td>
                 <td>
+                    <button id="reveal-<?php echo $row['record_ID']; ?>" onclick="toggleDetails(<?php echo $row['record_ID']; ?>); return false;">Reveal</button>
+                    <button id="hide-<?php echo $row['record_ID']; ?>" onclick="toggleDetails(<?php echo $row['record_ID']; ?>); return false;" style="display: none;">Hide</button>
                     <a href="edit_record.php?record_ID=<?php echo $row['record_ID']; ?>">Edit</a> |
                     <a href="delete_record.php?record_ID=<?php echo $row['record_ID']; ?>" onclick="return confirm('Are you sure you want to delete this record?');">Delete</a>
+                </td>
+            </tr>
+            <tr id="details-<?php echo $row['record_ID']; ?>" style="display: none;">
+                <td colspan="2">
+                    <strong>Username:</strong> <?php echo htmlspecialchars($row['record_username']); ?><br>
+                    <strong>Password:</strong> <?php echo htmlspecialchars($row['record_password']); ?><br>
+                    <strong>Notes:</strong> <?php echo htmlspecialchars($row['record_notes']); ?>
                 </td>
             </tr>
         <?php endwhile; ?>
